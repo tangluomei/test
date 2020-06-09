@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <script src="vue-router.js"></script>
+</head>
+<body>
+    <div id="app">
+        <a href="#/allinfo/123">1111</a>
+        <router-view></router-view>
+    </div>
+    <template  id="allinfo">
+        <h1 style="border: 1px solid red ; float: left; width: 50%;height: 1000px;">  .......{{id}}.......  allinfo   </h1>
+    </template>
+
+    <script>
+         var  allinfo = {
+                props:['id'],
+                template:"#allinfo",
+                mounted:   // 这是组件被挂载(渲染)到页面上的时候
+                    function(){
+                        console.log(1111)
+                       //this.id = this.$route.params.id
+                    
+                },
+                created() {  //组件在内存中被创建的时候
+                    console.log(22222)
+    
+                },
+                data:function(){
+                    return {count:0}
+                }
+            }
+
+              // 定义一个路由器对象     
+           const router = new VueRouter({
+                // 写上路由的配置项
+                routes:[
+                   {path:"/allinfo/:id",component:allinfo,props:true}
+                ]      
+            })
+
+            new Vue({
+                el:"#app",
+                router:router
+            })
+    </script>
+</body>
+</html>

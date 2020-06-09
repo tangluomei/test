@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <script src="vue-router.js"></script>
+</head>
+<body>
+    <div id="app">
+        <router-link to="customer">客户</router-link>
+        <a href="#/info/r/ty">内容</a>
+        <a href="#/comments">留言</a>
+        <router-link to="{name:a}"></router-link>
+        <router-view></router-view>
+    </div>
+    <template id="login">
+        <div>
+            用户名：<input type="text" ><br>
+          
+            密码：<input type="text" ><br>
+            <input type="button" value="登录">
+        </div>
+    </template>
+    <template id="register">
+        <div>
+            用户名：<input type="text" ><br>
+            密码：<input type="text" ><br>
+            再次输入密码：<input type="text" ><br>
+            <input type="button" value="注册">
+        </div>
+    </template>
+    <template id="info">
+        <div>
+            <h2>********info***********</h2>
+            <button @click="show">点击</button>
+        </div>
+       
+    </template>
+    <template id="comments">
+        <h2>********留言***********</h2>
+    </template>
+    <template id="custom">
+        <div>
+            <h3>客户</h3>
+            <a href="#/customer/login">登录</a>
+            <a href="#/customer/register">注册</a>
+            <router-view></router-view>
+        </div>
+    </template>
+    <script>
+        var login={
+            template:"#login"
+        }
+        var register={
+            template:"#register"
+        }
+        var info={
+            template:"#info",
+            methods: {
+                    show(){
+                        console.log(this.$route)
+                        console.log(this.$route.params)
+                    }
+                },
+        }
+        var comments={
+            template:"#comments"
+        }
+        var  custom ={
+                template:"#custom"
+            }
+        const router=new VueRouter({
+            routes:[
+                {
+                    path:"/customer",
+                    component:custom,
+                    children:[
+                        {path:"login",component:login},
+                        {path:"register",component:register}
+                        ]
+                    },
+                {path:"/info/:name/ty",component:info},
+                {path:"/comments",name:'a',component:comments},
+            ]
+        })
+        new Vue({
+            el:"#app",
+            router:router
+        })
+    </script>
+</body>
+</html>

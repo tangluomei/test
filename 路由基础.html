@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <script src="vue-router.js"></script>
+    <style>
+        .c1{
+            border: 1px solid red;
+            width: 5px;
+            height: 5px;
+        }
+    </style>
+</head>
+<body>
+        <div id="app">
+
+            <router-link to="customer">客户服务</router-link>
+            <router-link :to="{name:'a'}">allinfo</router-link>
+            <a href="#/comments">留言</a>
+
+            <router-view></router-view>
+        </div>
+<!--  模板区域开始 -->
+        <template  id="login">
+            <div>
+                用户名:  <input type="text"><br>
+                密码:  <input type="text"><br>
+                <input type="button"  value="登录" @click="show" ><br>
+            </div>
+
+        </template>
+        <template  id="register">
+            <div>
+                用户名:  <input type="text"><br>
+                密码:  <input type="text"><br>
+                再次输入密码:  <input type="text"><br>
+                <input type="button" value="注册" ><br>
+            </div>
+        </template>
+        <template  id="allinfo">
+            <h1>  ..............  allinfo   </h1>
+        </template>
+        <template  id="comments">
+            <h1>  东西不错，下次还来光顾!  </h1>
+        </template>
+
+
+        <template id="custom">
+            <div>
+                <h2>这是客户使用区</h2>
+                <a href="#/customer/login">登录</a>
+                <a href="#/customer/register">注册</a>
+                <router-view></router-view>
+            </div>
+        </template>
+<!--  模板区域结束 -->
+        <script>
+          
+            // 路由
+            // 后端路由   通过url(地址)来访问服务器中指定的资源
+            //  会让整个页面完成刷新
+
+            // 前端路由  在当前页面中指定的位置 里显示 指定的组件  
+            // 这个页面不会刷新  
+
+            // 两者的共同点:  地址栏的地址会改变
+
+
+            // 地址  hash     #
+
+            //  $route    $router
+
+            var login={
+                template:"#login",
+                methods: {
+                    show(){
+                        console.log(this.$route.params.xx)
+                       // console.log(this.$router)
+                    }
+                },
+            }
+            var  register ={
+                template:"#register"
+            }
+            var  allinfo = {
+                template:"#allinfo"
+            }
+            var comments ={
+                template:"#comments"
+            }
+
+            var  custom ={
+                template:"#custom"
+            }
+           // 在用路由来显示 组件的时候不要注册组件
+          //    Vue.component('login',login)
+          // uni-app
+         
+           // 定义一个路由器对象     
+            const router = new VueRouter({
+                // 写上路由的配置项
+                routes:[
+                    {
+                        path:"/customer",
+                        component:custom,
+                        children:[
+                            {path:"login",component:login},
+                            {path:"register",component:register},
+                        ]
+                    
+                    },
+                  
+                    {path:"/allinfo" ,name:'a',component:allinfo},
+                    {path:"/comments",component:comments}
+
+                ]      
+            })
+
+
+
+            new Vue({
+                el:"#app",
+                router:router
+            })
+
+        </script>
+</body>
+</html>

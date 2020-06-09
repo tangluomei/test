@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <script src="vue-router.js"></script>
+</head>
+<body>
+      <div id="app">
+          <router-view></router-view>
+          <router-view  name="a"></router-view>
+          <router-view  name="b"></router-view>
+      </div>
+    <template  id="login">
+        <div  style="border: 1px solid red ;width: 100%;height: 100px;">
+            用户名:  <input type="text"><br>
+            密码:  <input type="text"><br>
+            <input type="button"  value="登录" @click="show" ><br>
+        </div>
+
+    </template>
+    <template  id="register">
+        <div style="border: 1px solid red ; float: left;  width: 40%;height: 1000px;">
+            用户名:  <input type="text"><br>
+            密码:  <input type="text"><br>
+            再次输入密码:  <input type="text"><br>
+            <input type="button" value="注册" ><br>
+        </div>
+    </template>
+    <template  id="allinfo">
+        <h1 style="border: 1px solid red ; float: left; width: 50%;height: 1000px;">  ..............  allinfo   </h1>
+    </template>
+      <script>
+            var login={
+                template:"#login",
+                methods: {
+                    show(){
+                        console.log(this.$route.params.xx)
+                       // console.log(this.$router)
+                    }
+                },
+            }
+            var  register ={
+                template:"#register"
+            }
+            var  allinfo = {
+                template:"#allinfo"
+            }
+
+
+           // 定义一个路由器对象     
+           const router = new VueRouter({
+                // 写上路由的配置项
+                routes:[
+                    {path:"/",components:{
+                        default:login,
+                        a:register,
+                        b:allinfo
+                    }}
+                ]      
+            })
+          new Vue({
+                el:"#app",
+                router:router
+            })
+      </script>
+</body>
+</html>

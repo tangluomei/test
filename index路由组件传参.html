@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.js"></script>
+    <script src="vue-router.js"></script>
+</head>
+<body>
+    <div id="app">
+        <a href="#/allinfo/123">1111</a>
+        <router-view></router-view>
+    </div>
+    <template id="allinfo">
+        <h1>{{id}}</h1>
+    </template>
+    <script>
+        var allinfo={
+            props:['id'],
+            template:"#allinfo",
+        }
+        var router=new VueRouter({
+            routes:[
+                {path:"/allinfo/:id",component:allinfo,props:true},
+            ]
+
+        })
+        new Vue({
+            el:"#app",
+            router:router,
+        })
+    </script>
+</body>
+</html>
